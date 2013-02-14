@@ -15,8 +15,8 @@ over the last weekend. Keep reading if you want to know the details.
 
 Travis keeps at least a few pieces of data, which should be kept safe: we store
 user's github token, we keep private key, which is used to decrypt secure data
-from `.travis.yml` and, of course, we need to keep our own Travis token, which
-is used in github hooks and for API authentication.
+from `.travis.yml` and, of course, we need to keep our [own tokens](http://about.travis-ci.org/blog/2013-01-28-token-token-token/),
+which is used in github hooks and for API authentication.
 
 All those fields should be kept private, but ulike with passwords, we can't
 just store cryptographic hash, we need to be able to retrieve such data.
@@ -51,6 +51,7 @@ that the decrypted data can't leak accidentally in any output.
 The next thing on our security improvements list is to change a way secure
 environments work. Currently we send the decrypted config directly to workers
 which works fine, but it creates unnecassery risk of leaking the information
-somewhere along the way. The much better solution would be to decrypt the
+somewhere along the way. One solution that we discuss is to decrypt the
 data only when needed at the last possible step using some kind of API,
 which would also provide us information on any access to such data.
+However we still need to discuss this more and hash out the details.
