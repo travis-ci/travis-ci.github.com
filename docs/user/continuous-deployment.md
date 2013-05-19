@@ -26,6 +26,7 @@ More infos: [Cloud Foundry addon](/docs/user/addons/cloud-foundry/).
     addons:
       cloud_foundry:
         target:   "https://api.ironfoundry.me"
+        cli_tool: "af"
         email:    "someone@example.com"
         password: "foo bar"   # can be encrypted with `travis encrypt`
         app:      "myapp"     # optional, defaults to project name
