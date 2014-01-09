@@ -38,7 +38,7 @@ All VM images have the following pre-installed
  * Mercurial (official Ubuntu packages)
  * Subversion (official Ubuntu packages)
 
- 
+
 ### Compilers & Build toolchain
 
 GCC 4.6.x, Clang 3.2.x, make, autotools, cmake, scons.
@@ -146,6 +146,24 @@ depends on the language you're using.
 
 apt is configured to not require confirmation (assume -y switch by default) using both `DEBIAN_FRONTEND` env variable and apt configuration file). This means `apt-get install -qq` can be used without the -y flag.
 
+### Group membership
+
+The user executing the build (`$USER`) belongs to one primary group derived from that user.
+If your project needs extra memberships to run the build, follow these steps:
+
+1. Set up the environment. This can be done any time during the build lifecycle prior to the build script execution.
+    1. Set up and export environment variables.
+    1. Add `$USER` to desired secondary groups: `sudo usermod -a -G SECONDARY_GROUP_1,SECONDARY_GROUP_2 $USER`
+    You may modify the user's primary group with `-g`.
+1. Your `script` would look something like:
+
+```bash
+script: sudo -E su $USER -c 'COMMAND1; COMMAND2; COMMAND3'
+```
+This will pass the environment variables down to `bash` process which runs as `$USER`,
+while retaining the environment variables defined
+and belonging to secondary groups given above in `usermod`.
+
 ## JVM (Clojure, Groovy, Java, Scala) VM images
 
 ### JDK
@@ -169,7 +187,7 @@ at `/usr/local/bin/lein2`.
 
 ### SBT versions
 
-travis-ci.org potentially provides any version of Simple Build Tool (sbt or SBT) thanks to very powerful [sbt-extras](https://github.com/paulp/sbt-extras) alternative. In order to reduce build time, popular versions of sbt are already pre-installed (like for instance 0.12.1 or 0.11.3), but `sbt` command is able to dynamically detect and install the sbt version required by your Scala projects. 
+travis-ci.org potentially provides any version of Simple Build Tool (sbt or SBT) thanks to very powerful [sbt-extras](https://github.com/paulp/sbt-extras) alternative. In order to reduce build time, popular versions of sbt are already pre-installed (like for instance 0.12.1 or 0.11.3), but `sbt` command is able to dynamically detect and install the sbt version required by your Scala projects.
 
 ### Gradle version
 
