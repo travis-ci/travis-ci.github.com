@@ -54,7 +54,7 @@ After we confirmed that builds were running again and the correct configuration 
 
 Both platforms are running on entirely separate build setups, which is also true for the underlying build infrastructure. We wanted to make the switch on travis-ci.com with the confidence that the IPv6 only setup worked well on the open source platform.
 
-The IPv6 change was successful, and at around 22:00 UTC last Thursday, all of travis-ci.org was running against VMs talking to them only via IPv6. The VMs itself can still utilize IPv4 connections as the network allows for the IPv6 addresses to be NAT'ed for requests hitting IPv4 resources, most notably required for package and depdency mirrors.
+The IPv6 change was successful, and at around 22:00 UTC last Thursday, all of travis-ci.org was running against VMs talking to them only via IPv6. The VMs itself can still utilize IPv4 connections as the network allows for the IPv6 addresses to be NAT'ed for requests hitting IPv4 resources, most notably required for package and dependency mirrors.
 
 On Friday, we found several builds that needed to be requeued or updated to reflect their overall status properly, but we could confirm that all VM deployments were successful, and we ran on full capacity again.
 

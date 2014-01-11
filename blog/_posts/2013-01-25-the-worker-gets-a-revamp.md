@@ -13,7 +13,7 @@ For the past 6+ months we've been working hard on a bunch of changes related to 
 
 Travis is broken up into various small apps, each with a very focused responsibility. One of these apps is called [Travis Worker](https://github.com/travis-ci/travis-worker) and its responsibility is to manage a virtual machine (VM), get a Job from our queue (using RabbitMQ), run the build/job, and report the logs chunks and final job state.
 
-This might sound like a big responsibilty, and it is, but there is another piece to the worker puzzle, and that is Travis Build. [Travis Build](https://github.com/travis-ci/travis-build)'s responsibility is to know how to run a build for a particular language. For example, a Ruby project uses [Bundler](http://bundler.io/) for dependency management, while Node uses [npm](https://npmjs.org/). And of course, these defaults are configurable and overridable.
+This might sound like a big responsibility, and it is, but there is another piece to the worker puzzle, and that is Travis Build. [Travis Build](https://github.com/travis-ci/travis-build)'s responsibility is to know how to run a build for a particular language. For example, a Ruby project uses [Bundler](http://bundler.io/) for dependency management, while Node uses [npm](https://npmjs.org/). And of course, these defaults are configurable and overridable.
 
 ### Timeouts and Stalls
 
@@ -32,17 +32,17 @@ Fixing these issues have not been easy as there were three prime culprits, each 
   
   3. [net-ssh-shell](https://github.com/mitchellh/net-ssh-shell/)
 
-VirtualBox was definitely at fault for the VM explosions, that was easy, but it was also a possible candidate for the VM stalls as we postulated that it was interferring with the SSH connection causing it to hang, or that the [network card might be causing issues](https://github.com/mitchellh/vagrant/issues/391). 
+VirtualBox was definitely at fault for the VM explosions, that was easy, but it was also a possible candidate for the VM stalls as we postulated that it was interfering with the SSH connection causing it to hang, or that the [network card might be causing issues](https://github.com/mitchellh/vagrant/issues/391).
 
 SSH was also a logical explanation as maybe the connection was flickering and (maybe) net-ssh was trying to be forgiving when it should have just exploded and raised connection errors.
 
 And latestly there was net-ssh-shell. Maybe we should explain how this works a little.
 
-Since the dawn of Travis, the Worker has been using a Ruby gem called net-ssh-shell to help run your tests. This gem works around the issue of SSH not allowing you to run multiple commands after each other while also preserving the environment. net-ssh-shell effectivly starts an echoless shell and then pipes in commands via STDIN while capturing the output (STDOUT) and listening for a little code it adds to figure out when the command has finished and what the exit code is. You can see the main code at work [here](https://github.com/mitchellh/net-ssh-shell/blob/master/lib/net/ssh/shell/process.rb#L44-46).
+Since the dawn of Travis, the Worker has been using a Ruby gem called net-ssh-shell to help run your tests. This gem works around the issue of SSH not allowing you to run multiple commands after each other while also preserving the environment. net-ssh-shell effectively starts an echoless shell and then pipes in commands via STDIN while capturing the output (STDOUT) and listening for a little code it adds to figure out when the command has finished and what the exit code is. You can see the main code at work [here](https://github.com/mitchellh/net-ssh-shell/blob/master/lib/net/ssh/shell/process.rb#L44-46).
 
-This has worked great, but it's also a bit of a hack which isn't 100% realibale. All you need is for net-ssh-shell to miss a little bit of output, or for another process on the VM to print to STDOUT at the same time, mixing up the code it is waiting for, and you end up with a stalled job.
+This has worked great, but it's also a bit of a hack which isn't 100% reliable. All you need is for net-ssh-shell to miss a little bit of output, or for another process on the VM to print to STDOUT at the same time, mixing up the code it is waiting for, and you end up with a stalled job.
 
-At the end of the day there is no single reason we can pinpoint and be sure of when it comes to false timeouts, it is highly likely a mixture of technologies and libraries used contributes to the problem, and it is highly likely componded by Travis code.
+At the end of the day there is no single reason we can pinpoint and be sure of when it comes to false timeouts, it is highly likely a mixture of technologies and libraries used contributes to the problem, and it is highly likely compounded by Travis code.
 
 ### So what have we been doing about it?
 
@@ -55,7 +55,7 @@ About a month ago our amazing [Sven](http://twitter.com/svenfuchs) had an idea, 
   <figcaption>Spend 5 minutes with Sven and this is what happens to you!</figcaption>
 </figure>
 
-Instead of us running command after command using net-ssh-shell, we now create a shell script which includes all the commands we need to run, upload that to the VM, and then excute it! Boom! This means we now only need to run one command, capture the output and exit code, and all covered by the standard SSH spec. Even better, we now have a script you can run locally on a Linux or Mac machine to replicate exactly what we do!
+Instead of us running command after command using net-ssh-shell, we now create a shell script which includes all the commands we need to run, upload that to the VM, and then execute it! Boom! This means we now only need to run one command, capture the output and exit code, and all covered by the standard SSH spec. Even better, we now have a script you can run locally on a Linux or Mac machine to replicate exactly what we do!
 
 Welcome to the new Travis Build, which can be found on the [sf-compile-sh](https://github.com/travis-ci/travis-build/tree/sf-compile-sh) branch (for the meantime). You can read about it more [here](https://github.com/travis-ci/travis-build/pull/60), which also includes links to example build scripts we generate.
 
@@ -66,7 +66,7 @@ VirtualBox has gotten us very far. It was great for development, had some fantas
 
 As we grew from one worker box to our current 24, maintenance of the VMs became a pain. Updating a worker took up to an hour as each VM on the host had to be provisioned and primed for use. Also, because of how VirtualBox works, we had to plan for how many Ruby boxes we would run, or how many Perl/Python/PHP (PPP) or JVM boxes we needed. To make a long story short, we could not easily dynamically decide what builds a host box could or would run. 
 
-And of course there are the API isuses and VirtualBox specific errors, like trying to shut down VMs which looked liked they were shutting down but were actually stuck. Initially we implemented a crude 'kill -9' trick which would detect this error and then, well, shell out and kill the VM process using its process id, which seemed to work for a while, but was not fool proof by any means. In fact, it was merely a band aid around a more complicated issue of 'what does the future architecture of Travis look like?'
+And of course there are the API issues and VirtualBox specific errors, like trying to shut down VMs which looked liked they were shutting down but were actually stuck. Initially we implemented a crude 'kill -9' trick which would detect this error and then, well, shell out and kill the VM process using its process id, which seemed to work for a while, but was not fool proof by any means. In fact, it was merely a band aid around a more complicated issue of 'what does the future architecture of Travis look like?'
 
 The great thing is we finally have the answer to this question, and are very happy to say we now know what our next-gen architecture will look like. In fact, we have been testing it with the Rails and Spree queues, and since a week ago, the JVM queue. And over the next week or two we will be moving all queues to this new setup.
 
@@ -89,7 +89,7 @@ From now on, if any command before your actual tests are run fails we will mark 
   <figcaption>Errors in Pull Requests!</figcaption>
 </figure>
 
-The fine grained timeouts we've been using for the past year and a half were good, but they became restrictive for some. Restricting how long your app spends installing dependecies is annoying, especially when your test run might only take a fraction of the time. Instead we are now moving to a global 50 minute job timeout, and if no log output has been received in five minutes then we cancel the job. Why five minutes you say? We have found that not having log output from a job run points towards either a stalled test suite, or stalled process. A good example of this is some jobs start a background webserver but sometimes forget to stop it, causing the job to sit and wait. And of course, we mark these timeouts as errors as well!
+The fine grained timeouts we've been using for the past year and a half were good, but they became restrictive for some. Restricting how long your app spends installing dependencies is annoying, especially when your test run might only take a fraction of the time. Instead we are now moving to a global 50 minute job timeout, and if no log output has been received in five minutes then we cancel the job. Why five minutes you say? We have found that not having log output from a job run points towards either a stalled test suite, or stalled process. A good example of this is some jobs start a background webserver but sometimes forget to stop it, causing the job to sit and wait. And of course, we mark these timeouts as errors as well!
 
 ### So where to from here?
 

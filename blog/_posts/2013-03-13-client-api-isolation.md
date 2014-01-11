@@ -32,7 +32,7 @@ clients as well.
 But is it just about deployment? Of course not! It may seem that we
 need to have 2 apps running during development: the API and the web client
 itself. Most of the time this is not the case. As I mentioned above, we
-use CORS, which allow us to make requets to other domains. When I
+use CORS, which allow us to make requests to other domains. When I
 work on the client, I usually connect it to the production API. Have
 you ever needed to copy part of the production database, clean sensitive
 data and use it in development to catch any issues with the data you
@@ -69,7 +69,7 @@ mess up our own accounts.
 
 As I mentioned earlier, we use CORS, to make such isolation possible. CORS is fairly
 simple to set up and use. When you fire up an ajax request to the different domain,
-the browser should automatically try to use CORS. Before making the actualy request,
+the browser should automatically try to use CORS. Before making the actually request,
 the `OPTIONS` request should be sent in order to check if an endpoint accepts CORS.
 
 In order to see how it works in action with Travis API, you may try to use such curl

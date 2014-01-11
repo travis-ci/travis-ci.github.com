@@ -83,7 +83,7 @@ better, as it includes links to the alerts.
 
 We have escalation procedures in place that start out with a push notification,
 then send a txt message and finally do a voice call if there's no response. A
-repsonse is simply acknowledging an alert to signal that you're looking into it.
+response is simply acknowledging an alert to signal that you're looking into it.
 
 Surely this can be done from within Campfire too? Of course it can!
 
