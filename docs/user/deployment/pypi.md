@@ -81,7 +81,7 @@ If you would like to upload different distributions, specify them using the `dis
       provider: pypi
       user: ...
       password: ...
-      distributions: "sdist bdist" # Your distribtuions here
+      distributions: "sdist bdist" # Your distributions here
 
 If you specify `bdist_wheel` in the distributions, the `wheel` package will automatically be installed.
 

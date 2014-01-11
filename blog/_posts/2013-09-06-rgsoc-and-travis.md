@@ -20,7 +20,7 @@ As [Travis CI](http://travis-ci.org) has always been deeply rooted in the commun
 
 ### What a crazy journey: raising $80,000 for a great cause in just about two weeks
 
-The idea was born in March, at a meeting of the Berlin Chapter of Rails Girls coaches and organizers. Apparantly whenever there is cake and coffee around magic starts happening ;)
+The idea was born in March, at a meeting of the Berlin Chapter of Rails Girls coaches and organizers. Apparently whenever there is cake and coffee around magic starts happening ;)
 
 ![](https://f.cloud.github.com/assets/1711357/727474/4d9eeafa-e19a-11e2-98a2-d223cfed77c7.png)
 

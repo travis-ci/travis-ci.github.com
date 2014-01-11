@@ -32,7 +32,7 @@ to give back even more.
 
 After coordinating and managing [Rails Girls Summer of
 Code](http://railsgirlssummerofcode.org) - which was our unofficial first project we
-took on - we are now focussing on organizing Open Source Grants. This means we
+took on - we are now focusing on organizing Open Source Grants. This means we
 help set up funding for hand-picked Open Source projects. Either if it's a new
 project or an established one that needs help being continued - we want to
 support progress and amazing ideas!

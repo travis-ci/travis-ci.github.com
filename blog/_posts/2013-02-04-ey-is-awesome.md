@@ -12,7 +12,7 @@ As some of you may know I've been working on Travis CI for the last 3 months
 You can read about the things that I've been working on on
 [Engine Yard's blog](http://blog.engineyard.com/2012/travis-ci?eymktci=70170000000hHEC).
 
-This pure awesomness does not end here, though. Recently Engine Yard extended
+This pure awesomeness does not end here, though. Recently Engine Yard extended
 my participation in EY OSS Grant Program by 3 months! I can't be thankful
 enough for that, so please help me and give them lots of internet hugs, thank them on twitter
 <a href="https://twitter.com/share" class="twitter-share-button" data-text="Thank you @engineyard!"></a>
