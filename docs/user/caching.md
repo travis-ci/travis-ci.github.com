@@ -153,7 +153,7 @@ When you want to enable multiple caching features, you can list them as an array
     - bundler
     - apt
 
-This does not when caching [arbitrary directories](#Arbitrary-directories). If you want to combine that with other caching modes, you will have to use a hash map:
+This does not work when caching [arbitrary directories](#Arbitrary-directories). If you want to combine that with other caching modes, you will have to use a hash map:
 
     cache:
       bundler: true
