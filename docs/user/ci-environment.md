@@ -160,7 +160,7 @@ If your project needs extra memberships to run the build, follow these steps:
 ```bash
 script: sudo -E su $USER -c 'COMMAND1; COMMAND2; COMMAND3'
 ```
-This will pass the environment variables down to `bash` process which runs as `$USER`,
+This will pass the environment variables down to a `bash` process which runs as `$USER`,
 while retaining the environment variables defined
 and belonging to secondary groups given above in `usermod`.
 
