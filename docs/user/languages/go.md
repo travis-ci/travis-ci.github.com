@@ -17,6 +17,8 @@ Travis VMs are 64 bit and currently provide
 
 Go projects on travis-ci.org assume you use Make or straight Go build tool by default.
 
+Current supported Go versions are 1.0.2, 1.1.2 and 1.2.0
+
 ## Specifying a Go version to use
 
 Travis CI uses gvm, so you can use any tagged version of Go or use `tip` to get the latest version.
