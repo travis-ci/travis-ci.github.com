@@ -37,7 +37,7 @@ example:
     xcode_project: MyNewProject.xcodeproj # path to your xcodeproj folder
     xcode_scheme: MyNewProjectTests
 
-You can also specify an SDK using the `xcode_sdk` variable. This needs to be on
+You can also specify an SDK using the `xcode_sdk` variable. This needs to be in
 the form `iphonesimulatorX.Y` where `X.Y` is the version you want to test
 against.
 
